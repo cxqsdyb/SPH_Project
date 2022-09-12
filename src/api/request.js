@@ -34,6 +34,7 @@ requests.interceptors.response.use((res) => {
   // 成功的回调，服务器响应数据回来后，响应拦截器可以检测到，做一些事情
   // 进度条结束
   nprogress.done();
+  res.headers["Access-Control-Allow-Origin"] = "*";
   return res.data;
 }, (err) => {
   // 响应失败的回调
