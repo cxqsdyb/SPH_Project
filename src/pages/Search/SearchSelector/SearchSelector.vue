@@ -4,18 +4,10 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li
-            v-for="brand in trademarkList"
-            :key="brand.tmId"
-            @click="tradeHandler(brand)"
-          >
+          <li v-for="brand in trademarkList" :key="brand.tmId" @click="tradeHandler(brand)">
             {{ brand.tmName }}
           </li>
         </ul>
-      </div>
-      <div class="ext">
-        <a href="javascript:void(0);" class="sui-btn">多选</a>
-        <a href="javascript:void(0);">更多</a>
       </div>
     </div>
     <div class="type-wrap" v-for="attr in attrsList" :key="attr.attrId">
@@ -29,8 +21,7 @@
           <!-- 多个属性值 -->
           <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
             <a @click="attrInfo(attr.attrId, attrValue, attr.attrName)">
-              {{ attrValue }}</a
-            >
+              {{ attrValue }}</a>
           </li>
         </ul>
       </div>

@@ -26,11 +26,8 @@ const actions = {
   async userRegister({ commit }, userData) {
     let { phone, password, code } = userData;
     let result = await reqUserRegister(phone, password, code);
-    if (result.code >= 200 && result.code < 300) {
-      return result.message
-    } else {
-      return Promise.reject()
-    }
+    return result
+
   },
   // 用户登录【token】
   async userLogin({ commit }, userData) {

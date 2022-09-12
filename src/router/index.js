@@ -60,6 +60,7 @@ router.beforeEach(async (to, from, next) => {
     let toPath = to.path;
     if (toPath.indexOf('/trade') != -1 || toPath.indexOf('/pay') != -1 || toPath.indexOf('/paysuccess') != -1 || toPath.indexOf('/center') != -1) {
       // 将想去的路由作为query参数传给登录路由组件
+      alert('请先登录！')
       next(`/login?toPath=${toPath}`);
     } else {
       next();

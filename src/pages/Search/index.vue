@@ -29,11 +29,7 @@
               <i @click="removeTrademark">x</i>
             </li>
             <!-- 点击过的属性会有多个，props是一个数组！ -->
-            <li
-              class="with-x"
-              v-for="(attr, index) in searchData.props"
-              :key="index"
-            >
+            <li class="with-x" v-for="(attr, index) in searchData.props" :key="index">
               <!-- props格式为[" id:属性值：属性名 "] -->
               {{ `${attr.split(":")[2]}:${attr.split(":")[1]}` }}
               <!-- 点击清除属性值面包屑，需要传回索引值！ -->
@@ -52,31 +48,19 @@
               <ul class="sui-nav">
                 <!-- order字符串有1，说明对综合排序 -->
                 <li :class="{ active: isOne }" @click="changeOrder('1')">
-                  <a href="javascript:;"
-                    >综合<span
-                      v-show="isOne"
-                      class="iconfont"
-                      :class="{
-                        'icon-arrowTop': IsAsc,
-                        'icon-arrowBottom': IsDesc,
-                      }"
-                    >
-                    </span
-                  ></a>
+                  <a href="javascript:;">综合<span v-show="isOne" class="iconfont" :class="{
+                    'icon-arrowTop': IsAsc,
+                    'icon-arrowBottom': IsDesc,
+                  }">
+                    </span></a>
                 </li>
                 <!-- order字符串有2，说明对价格排序 -->
                 <li :class="{ active: isTwo }" @click="changeOrder('2')">
-                  <a href="javascript:;"
-                    >价格<span
-                      v-show="isTwo"
-                      class="iconfont"
-                      :class="{
-                        'icon-arrowTop': IsAsc,
-                        'icon-arrowBottom': IsDesc,
-                      }"
-                    >
-                    </span
-                  ></a>
+                  <a href="javascript:;">价格<span v-show="isTwo" class="iconfont" :class="{
+                    'icon-arrowTop': IsAsc,
+                    'icon-arrowBottom': IsDesc,
+                  }">
+                    </span></a>
                 </li>
               </ul>
             </div>
@@ -88,7 +72,7 @@
                   <div class="p-img">
                     <!-- 使用声明式路由导航 -->
                     <router-link :to="`/detail/${goods.id}`">
-                    <!-- 使用懒加载！ -->
+                      <!-- 使用懒加载！ -->
                       <img v-lazy="goods.defaultImg" />
                     </router-link>
                   </div>
@@ -99,39 +83,24 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
-                      target="_blank"
-                      href="item.html"
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >{{ goods.title }}</a
-                    >
+                    <a target="_blank" href="item.html" title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】">{{
+                    goods.title }}</a>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
-                      class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
-                    >
-                    <a href="javascript:void(0);" class="sui-btn btn-bordered"
-                      >收藏</a
-                    >
+                    <a href="javascript:;" class="sui-btn btn-bordered btn-danger"
+                      @click="addShopCart(goods.id)">加入购物车</a>
+                    <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
           <!-- 分页器 ，props传四个参数-->
-          <Pagination
-            :pageNo="searchData.pageNo"
-            :pageSize="searchData.pageSize"
-            :total="total"
-            :continues="5"
-            @getPage="getPageNo"
-          />
+          <Pagination :pageNo="searchData.pageNo" :pageSize="searchData.pageSize" :total="total" :continues="5"
+            @getPage="getPageNo" />
         </div>
       </div>
     </div>
@@ -273,8 +242,6 @@ export default {
         this.searchData.props.push(propsData);
         this.getGoodsData();
       }
-
-
     },
     // 排序按钮点击响应函数
     changeOrder(flag) {
@@ -294,6 +261,21 @@ export default {
     getPageNo(index) {
       this.searchData.pageNo = index;
       this.getGoodsData();
+    },
+    // 添加购物车
+    async addShopCart(skuId) {
+      // mounted中有商品id！
+      let sendData = { skuId, skuNum: 1 };
+      // let ans = this.$store.dispatch('UpdateShopCart', sendData)
+      // console.log('ans :>> ', ans);
+      // 通过try catch来捕获错误
+      try {
+        await this.$store.dispatch('UpdateShopCart', sendData)
+        this.$message('成功添加！')
+      } catch (err) {
+        // 如果失败，报错，err为失败promise的结果
+        alert(err);
+      }
     }
 
   },
@@ -381,6 +363,7 @@ export default {
             display: inline-block;
             height: 100%;
             vertical-align: middle;
+
             &:hover {
               color: rgb(210, 36, 36);
             }

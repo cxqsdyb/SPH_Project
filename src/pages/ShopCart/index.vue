@@ -13,51 +13,29 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="goods in shopCartList" :key="goods.id">
           <li class="cart-list-con1">
-            <input
-              type="checkbox"
-              name="chk_list"
-              :checked="goods.isChecked == 1"
-              @change="updateChecked(goods.skuId, goods.isChecked)"
-            />
+            <input type="checkbox" name="chk_list" :checked="goods.isChecked == 1"
+              @change="updateChecked(goods.skuId, goods.isChecked)" />
           </li>
           <li class="cart-list-con2">
             <img :src="goods.imgUrl" />
             <div class="item-msg">
-              {{ goods.skuName }}
+              {{ goods.skuName|| 'empty' }}
             </div>
           </li>
           <li class="cart-list-con4">
-            <span class="price">{{ goods.skuPrice }}</span>
+            <span class="price">{{ goods.skuPrice|| 'empty' }}</span>
           </li>
           <li class="cart-list-con5">
-            <a
-              href="javascript:void(0)"
-              class="mins"
-              @click="changeNum('btn', goods, -1)"
-              >-</a
-            >
-            <input
-              autocomplete="off"
-              type="text"
-              :value="goods.skuNum"
-              minnum="1"
-              class="itxt"
-              @change="changeNum('input', goods, $event.target.value)"
-            />
-            <a
-              href="javascript:void(0)"
-              class="plus"
-              @click="changeNum('btn', goods, 1)"
-              >+</a
-            >
+            <a href="javascript:void(0)" class="mins" @click="changeNum('btn', goods, -1)">-</a>
+            <input autocomplete="off" type="text" :value="goods.skuNum" minnum="1" class="itxt"
+              @change="changeNum('input', goods, $event.target.value)" />
+            <a href="javascript:void(0)" class="plus" @click="changeNum('btn', goods, 1)">+</a>
           </li>
           <li class="cart-list-con6">
-            <span class="sum">{{ goods.skuNum * goods.skuPrice }}</span>
+            <span class="sum">{{ goods.skuNum * goods.skuPrice ||'empty' }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="deleteGoods(goods.skuId)"
-              >删除</a
-            >
+            <a href="#none" class="sindelet" @click="deleteGoods(goods.skuId)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -66,12 +44,8 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input
-          class="chooseAll"
-          type="checkbox"
-          :checked="isAllChecked && shopCartList.length > 0"
-          @change="changeAllChecked"
-        />
+        <input class="chooseAll" type="checkbox" :checked="isAllChecked && shopCartList.length > 0"
+          @change="changeAllChecked" />
         <span>全选</span>
       </div>
       <div class="option">
@@ -240,7 +214,7 @@ export default {
       padding: 10px;
       overflow: hidden;
 
-      & > div {
+      &>div {
         float: left;
       }
 
@@ -277,7 +251,7 @@ export default {
         border-bottom: 1px solid #ddd;
         overflow: hidden;
 
-        & > li {
+        &>li {
           float: left;
         }
 
